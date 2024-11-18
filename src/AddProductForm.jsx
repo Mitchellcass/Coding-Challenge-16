@@ -1,60 +1,63 @@
 import React, { useState } from 'react';
 
-function AddProductForm({ setProducts }) {
-  const [newProduct, setNewProduct] = useState({
-    id: '',
-    name: '',
-    price: '',
-    description: '',
-  });
+function AddProductForm({ addProduct }) {
+  // State to hold form values
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState('');
+  const [description, setDescription] = useState('');
 
+  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    setProducts((prevProducts) => [
-      ...prevProducts,
-      { ...newProduct, id: prevProducts.length + 1 }, // Creates a unique ID
-    ]);
-    
-    // Reset filds
-    setNewProduct({ id: '', name: '', price: '', description: '' });
-  };
+    e.preventDefault(); // Prevent default form submission behavior
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewProduct((prev) => ({ ...prev, [name]: value }));
+    // Create a new product object
+    const newProduct = {
+      id: Date.now(), // Unique ID using timestamp
+      name,
+      price: parseFloat(price),
+      description,
+    };
+
+    // Call the addProduct function passed as a prop to add the product
+    addProduct(newProduct);
+
+    // Clear the form fields after submission
+    setName('');
+    setPrice('');
+    setDescription('');
   };
 
   return (
-    <div>
-      <h2>Add Product</h2>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <h2>Add New Product</h2>
+      <div>
+        <label>Name:</label>
         <input
           type="text"
-          name="name"
-          value={newProduct.name}
-          onChange={handleChange}
-          placeholder="Product Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
+      </div>
+      <div>
+        <label>Price:</label>
         <input
           type="number"
-          name="price"
-          value={newProduct.price}
-          onChange={handleChange}
-          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
           required
         />
+      </div>
+      <div>
+        <label>Description:</label>
         <textarea
-          name="description"
-          value={newProduct.description}
-          onChange={handleChange}
-          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           required
         />
-        <button type="submit">Add Product</button>
-      </form>
-    </div>
+      </div>
+      <button type="submit">Add Product</button>
+    </form>
   );
 }
 
