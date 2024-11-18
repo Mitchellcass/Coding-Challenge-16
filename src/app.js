@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ProductList from './ProductList';
+import AddProductForm from './AddProductForm';
 
 function App() {
+  const [products, setProducts] = useState([
+    { id: 1, name: 'Laptop', price: 1200, description: 'Laptop' },
+    { id: 2, name: 'Phone', price: 1000, description: 'Latest Smartphone' },
+    { id: 3, name: 'Headphones', price: 150, description: 'Bluetooth headphones' },
+    { id: 4, name: 'Keyboard', price: 30, description: 'Keyboard' },
+  ]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Welcome to My React App</h1>
-      </header>
+      <h1>Product List</h1>
+      <ProductList products={products} />
+      <AddProductForm setProducts={setProducts} />
     </div>
   );
 }

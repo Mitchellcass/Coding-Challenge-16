@@ -1,63 +1,53 @@
 import React, { useState } from 'react';
 
-function AddProductForm({ addProduct }) {
-  // State to hold form values
+function AddProductForm({ setProducts }) {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
 
-  // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
+    if (!name || !price || !description) return;
 
-    // Create a new product object
     const newProduct = {
-      id: Date.now(), // Unique ID using timestamp
+      id: Date.now(),  // Unique IDs
       name,
       price: parseFloat(price),
-      description,
+      description
     };
 
-    // Call the addProduct function passed as a prop to add the product
-    addProduct(newProduct);
+    setProducts(prevProducts => [...prevProducts, newProduct]);
 
-    // Clear the form fields after submission
     setName('');
     setPrice('');
     setDescription('');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <h2>Add New Product</h2>
-      <div>
-        <label>Name:</label>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
+          placeholder="Product Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          required
         />
-      </div>
-      <div>
-        <label>Price:</label>
         <input
           type="number"
+          placeholder="Product Price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
-          required
         />
-      </div>
-      <div>
-        <label>Description:</label>
-        <textarea
+        <input
+          type="text"
+          placeholder="Product Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
         />
-      </div>
-      <button type="submit">Add Product</button>
-    </form>
+        <button type="submit">Add Product</button>
+      </form>
+    </div>
   );
 }
 
