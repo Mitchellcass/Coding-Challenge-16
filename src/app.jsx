@@ -3,7 +3,7 @@ import ProductList from './ProductList';
 import AddProductForm from './AddProductForm'; 
 
 function App() {
-  // Default list of products
+  //List of products
   const [products, setProducts] = useState([
     { id: 1, name: 'Laptop', price: 1200, description: 'Laptop' },
     { id: 2, name: 'Phone', price: 1000, description: 'Latest Smartphone' },
@@ -14,10 +14,8 @@ function App() {
   return (
     <div className="App">
       <h1>Product List</h1>
-      {/* Render ProductList and pass the products as props */}
       <ProductList products={products} />
       
-      {/* Render AddProductForm */}
       <AddProductForm setProducts={setProducts} />
     </div>
   );
